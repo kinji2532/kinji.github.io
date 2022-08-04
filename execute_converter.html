@@ -6,9 +6,25 @@
   </head>
   <body>
     <input type="file" id="inputFile" accept=".txt,.mcfunction" multiple><br>
+    <input type="submit" id="loadClipboard" onclick="clipboard();"><br>
   </body>
   <script>
+    function convert_text(text){
+      return text.replace(/(?<=^([^"]|"[^"]*")*)execute +(?<selector>([^ "\[\]]|"[^"]*"|\[([^"\[\]]|"[^"]*"|\[([^"]|"[^"]*")*\])*\])+) +(?<location>~?-?\d* ?~?-?\d* ?~?-?\d*) (?<detect>detect (~?-?\d* ?~?-?\d* ?~?-?\d* \w+ \d* ))?/g,(...list)=>{
+        const { selector, location, detect } = list.slice(-1)[0];
+        return `execute as ${selector} at @s positioned ${location} ${detect ? 'if block '+detect:''}run `;
+      });
+    };
+
+    async function clipboard(){
+      const text = await navigator.clipboard.readText();
+      const result = convert_text(text);
+      const res = await navigator.clipboard.writeText(result);
+      console.log(res);
+    };
+
     const input = document.getElementById('inputFile');
+
     input.addEventListener('change', function(event){
       const files = event.target.files;
       for(const file of files){
@@ -16,11 +32,8 @@
         reader.readAsText(file);
 
         reader.onload = function(){
-          const txt = reader.result;
-          const result = txt.replace(/(?<=^([^"]|"[^"]*")*)execute +(?<selector>([^ "\[\]]|"[^"]*"|\[([^"\[\]]|"[^"]*"|\[([^"]|"[^"]*")*\])*\])+) +(?<location>~?-?\d* ?~?-?\d* ?~?-?\d*) (?<detect>detect (~?-?\d* ?~?-?\d* ?~?-?\d* \w+ \d* ))?/g,(...list)=>{
-            const { selector, location, detect } = list.slice(-1)[0];
-            return `execute as ${selector} at @s positioned ${location} ${detect ? 'if block '+detect:''}run `;
-          });
+          const text = reader.result;
+          const result = comvert_text(text);
           const blob = new Blob([ result ],{ type: 'text/plan' });
           let link = document.createElement('a');
           link.href = URL.createObjectURL(blob);
