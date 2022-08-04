@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>execute converter</title>
+  </head>
+  <body>
+    <input type="file" id="inputFile" accept=".txt,.mcfunction" multiple><br>
+  </body>
+  <script>
+    const input = document.getElementById('inputFile');
+    input.addEventListener('change', function(event){
+      const files = event.target.files;
+      for(const file of files){
+        const reader = new FileReader();
+        reader.readAsText(file);
+
+        reader.onload = function(){
+          const txt = reader.result;
+          const result = txt.replace(/(?<=^([^"]|"[^"]*")*)execute +(?<selector>([^ "\[\]]|"[^"]*"|\[([^"\[\]]|"[^"]*"|\[([^"]|"[^"]*")*\])*\])+) +(?<location>~?-?\d* ?~?-?\d* ?~?-?\d*) (?<detect>detect (~?-?\d* ?~?-?\d* ?~?-?\d* \w+ \d+))?/g,(...list)=>{
+            const { selector, location, detect } = list.slice(-1)[0];
+            return `execute as ${selector} at @s positioned ${location} ${detect ? 'if block '+detect:''} run `;
+          });
+          const blob = new Blob([ result ],{ type: 'text/plan' });
+          let link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = file.name;
+          link.click();
+        }
+      }
+    });
+  </script>
+</html>
