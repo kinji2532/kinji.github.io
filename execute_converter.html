@@ -17,9 +17,9 @@
 
         reader.onload = function(){
           const txt = reader.result;
-          const result = txt.replace(/(?<=^([^"]|"[^"]*")*)execute +(?<selector>([^ "\[\]]|"[^"]*"|\[([^"\[\]]|"[^"]*"|\[([^"]|"[^"]*")*\])*\])+) +(?<location>~?-?\d* ?~?-?\d* ?~?-?\d*) (?<detect>detect (~?-?\d* ?~?-?\d* ?~?-?\d* \w+ \d+))?/g,(...list)=>{
+          const result = txt.replace(/(?<=^([^"]|"[^"]*")*)execute +(?<selector>([^ "\[\]]|"[^"]*"|\[([^"\[\]]|"[^"]*"|\[([^"]|"[^"]*")*\])*\])+) +(?<location>~?-?\d* ?~?-?\d* ?~?-?\d*) (?<detect>detect (~?-?\d* ?~?-?\d* ?~?-?\d* \w+ \d*? ))?/g,(...list)=>{
             const { selector, location, detect } = list.slice(-1)[0];
-            return `execute as ${selector} at @s positioned ${location} ${detect ? 'if block '+detect:''} run `;
+            return `execute as ${selector} at @s positioned ${location} ${detect ? 'if block '+detect:''}run `;
           });
           const blob = new Blob([ result ],{ type: 'text/plan' });
           let link = document.createElement('a');
