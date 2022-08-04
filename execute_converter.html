@@ -6,7 +6,9 @@
   </head>
   <body>
     <input type="file" id="inputFile" accept=".txt,.mcfunction" multiple><br>
-    <input type="submit" id="loadClipboard" onclick="clipboard();"><br>
+    <input type="submit" id="loadClipboard" value="クリップボードを変換" onclick="clipboard();"><br>
+    <textarea id="inputarea"></textarea><br>
+    <textarea id="outputarea"></textarea><br>
   </body>
   <script>
     function convert_text(text){
@@ -20,7 +22,7 @@
       const text = await navigator.clipboard.readText();
       const result = convert_text(text);
       const res = await navigator.clipboard.writeText(result);
-      console.log(res);
+      alert('success!');
     };
 
     const input = document.getElementById('inputFile');
