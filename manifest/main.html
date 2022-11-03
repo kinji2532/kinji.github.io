@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Manifest Generator</title>
+        <meta name="description" content="マニフェストの生成">
+        <meta charset="utf-8">
+        <link rel="icon" href="./icon.png" sizes="16x16" type="image/png" />
+        <link rel="stylesheet" type="text/css" href="./css/main.css">
+        <script type="text/javascript" src="./scripts/main.js"></script>
+    </head>
+    <body>
+        <div>
+            <table width="100%"  height="600">
+                <th colspan="7" height="50">Manifest Generator</th>
+                <tr>
+                    <td colspan="3" width="21%"><p>manifest name</p></td>
+                    <td colspan="3" width="21%"><input type="text" id="maniName"></td>
+                    <td rowspan="10" width="58%"><textarea id="manifest" readonly></textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><p>manifest description</p></td>
+                    <td colspan="3"><input type="text" id="maniDesc"></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><p>min engine version</p></td>
+                    <td><input type="text" id="maniMinVer1"></td>
+                    <td><input type="text" id="maniMinVer2"></td>
+                    <td><input type="text" id="maniMinVer3"></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><p>manifest type</p></td>
+                    <td colspan="3">
+                        <select name="type" id="maniType">
+                            <option selected>data</option>
+                            <option>resources</option>
+                            <option>script</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3"><p>script entry path</p></td>
+                    <td colspan="3"><input type="text" id="maniEntry"></td>
+                </tr>
+                <!--tr>
+                    <td colspan="3"><p>manifest version</p></td>
+                    <td colspan="3">
+                        <select name="version" id="maniMineVer">
+                            <option selected>normal</option>
+                            <option>preview</option>
+                        </select>
+                    </td>
+                </tr-->
+                <tr  style="text-align:center;">
+                    <td width="7%"><p>gametest</p></td>
+                    <td width="7%" ><input type="checkbox" id="maniDepeGame"></td>
+                    <td width="7%"><p>minecraft</p></td>
+                    <td width="7%"><input type="checkbox" id="maniDepeMine"></td>
+                    <td width="7%"><p>ui</p></td>
+                    <td width="7%"><input type="checkbox" id="maniDepeMineUi"></td>
+               </tr>
+                <tr><td colspan="6" height="100%"></td></tr>
+            </table>
+        </div>
+        <input type="submit" onclick="geneManifest();">
+    </body>
+</html>
