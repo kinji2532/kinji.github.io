@@ -34,16 +34,16 @@ function geneManifest(){
     maniTemp.header.min_engine_version = '<repMinVer>';
   }
   if(maniType.value === 'script') {
-    maniTemp.modules[0].language = 'JavaScript';
+    maniTemp.modules[0].language = 'javascript';
     maniTemp.modules[0].entry = `scripts/${maniEntry.value.replace(/\.js$/,'') || 'main'}.js`;
     maniTemp.dependencies = [];
     if(maniDepeGame.checked) maniTemp.dependencies.push({ "module_name": "@minecraft/server-gametest", "version": "1.0.0-beta" });
-    if(maniDepeMine.checked) maniTemp.dependencies.push({ "module_name": "@minecraft/server", "version": "1.0.0-beta" });
+    if(maniDepeMine.checked) maniTemp.dependencies.push({ "module_name": "@minecraft/server", "version": "1.1.0-beta" });
     if(maniDepeMineUi.checked) maniTemp.dependencies.push({ "module_name": "@minecraft/server-ui", "version": "1.0.0-beta" });
   }
   textarea.value = JSON.stringify(maniTemp, null, 2).replace(/"<rep(Min|Game)?Ver>"/g, function(data) {
     return data === '"<repVer>"' ? '[ 1, 0, 0 ]' :
-      /*data === '"<repMinVer>"' ? `[ ${maniMinVer1.value || 1}, ${maniMinVer2.value || 0}, ${maniMinVer3.value || 0} ]`:
-      maniMineVer.value === 'normal' ? '"1.0.0"' :*/ '"1.0.0-beta"';
+      data === '"<repMinVer>"' ? `[ ${maniMinVer1.value || 1}, ${maniMinVer2.value || 0}, ${maniMinVer3.value || 0} ]`:
+      maniMineVer.value === 'normal' ? '"1.0.0"' : '"1.0.0-beta"';
   });
 }
